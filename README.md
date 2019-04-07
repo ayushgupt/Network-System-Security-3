@@ -24,7 +24,7 @@
 - Decrypted message contains 2 parts "client_id" who sent the document and "recd_hash_doc" that is hash of the recieved document
 - Server then adds timestamp calculated from time.ctime and encrypts by using the clients public key from the publicDirectory
 - Server now adds its signature(made using its private key) to this (doc_hash+time_stamp), signature is calculated using these lines below
-  - hash_obj = SHA256.new()
+  - hash_obj = SHA256.new('doc_hash+time_stamp')
   - signer_x = PKCS1_v1_5.new(server_dkey)
   - signature_x = signer_x.sign(hash_obj)
 - This (doc_hash+time_stamp+signature_x) is the encrypted using client's public key and sent back to client by encoding in base64 format
@@ -33,7 +33,7 @@
 - Client sends SHA256 encoded (UTF-8 encoded filedata) to the Server and gets back (hash_doc+tstamp+rec_signature) by decoding Server's message with it's private key
 - It firstly verifies whether recieved and sent Hash doc is same
 - It then verifies the Server's signature using verifier object made using server's public key
-  - hash_obj = SHA256.new()
+  - hash_obj = SHA256.new('hash_doc+tstamp')
   - verifier = PKCS1_v1_5.new(server_ekey)
   - sign_status =  verifier.verify(hash_obj,rec_signature)
 - Done with all the verification from Server side, now things start with the client2 side
