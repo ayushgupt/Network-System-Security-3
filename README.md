@@ -10,7 +10,7 @@
 
 ## Order of Running these files
 - First the above 3 scripts should be run to generate the public and private keys
-- 
+- Then Need to run server.py, then client2.py and finally client1.py
 
 ## config.py
 - BUFFER SIZES
