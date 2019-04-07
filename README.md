@@ -43,3 +43,16 @@
 ## client2.py
 - It just recieves message from Client1 and verifies it using server public key
 - Then reverts the status back to Client1 for printing
+
+## Some Crypto functions used
+- PKCS1_v1_5 is used to make a signature verifier object
+  - from Crypto.Signature import PKCS1_v1_5
+  - verifier = PKCS1_v1_5.new(server_ekey)
+  - sign_status = verifier.verify(hash_obj, recv_msg_signature)
+- PKCS1_OAEP is used to use Public and Private keys to encrypt or decrypt using generated keys
+  - from Crypto.Cipher import PKCS1_OAEP
+  - encrypted_msg = PKCS1_OAEP.new(server_ekey).encrypt(message.encode('utf-8'))
+  - decrypted_data = PKCS1_OAEP.new(client1_dkey).decrypt(decoded_data)
+- base64 is used to encode or decode data before sending via sockets
+  - message = base64.b64encode(encrypted_msg)
+  - decoded_data = base64.b64decode(data)
